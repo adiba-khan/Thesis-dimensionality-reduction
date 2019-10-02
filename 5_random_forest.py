@@ -30,6 +30,23 @@ y = pd.read_pickle(r"y.pkl").values
 y = label_binarize(y, classes=[0, 1, 2])
 n_classes = y.shape[1]
 
+#---------------------------
+# RUN CLASSIFIER WITH NO DR
+#---------------------------
+classifier_condition = "Random Forest, no DR"
+
+x_train, x_test, y_train, y_test = train_test_split(x, y, stratify=y, test_size = 0.20, random_state=5)
+
+rfclassifier = RandomForestClassifier(n_estimators=500, random_state=5, criterion = 'gini')
+classifier = OneVsRestClassifier(rfclassifier, n_jobs = -1)
+classifier.fit(x_train, y_train)
+
+prediction = classifier.predict(x_test)
+
+end = time.time()
+
+save_data[f"{classifier_condition}_n = {PCA_var[idx]}"] = (model_evaluation("RF", PCA_var[idx], x_test, y_test, prediction, classifier, end-start, n_classes))
+
 #----------------------------------------
 # RUN CLASSIFIER WITH PCA IMPLEMENTATION
 #----------------------------------------
@@ -58,4 +75,31 @@ for idx in range(len(PCA_var)):
 
     save_data[f"{classifier_condition}_n = {PCA_var[idx]}"] = (model_evaluation("RF", PCA_var[idx], x_test, y_test, prediction, classifier, end-start, n_classes))
 
-save_data.to_csv("Random_Forest_Results_new_PCA.csv")
+#----------------------------------------
+# RUN CLASSIFIER WITH LASSO IMPLEMENTATION
+#----------------------------------------
+
+classifier_condition = "Random Forest, LASSO"
+alpha = [0.0001, 0.001, 0.01]
+
+x_train, x_test, y_train, y_test = train_test_split(x, y, stratify=y, test_size = 0.20, random_state=5)
+
+for idx in range(len(alpha)):
+    start = time.time()
+
+    pca = PCA(n_components=alpha[idx], svd_solver="full")
+    pca.fit(x_train)
+    x_train = pca.transform(x_train)
+    x_test = pca.transform(x_test)
+
+    rfclassifier = RandomForestClassifier(n_estimators=500, random_state=5, criterion = 'gini')
+    classifier = OneVsRestClassifier(rfclassifier, n_jobs = -1)
+    classifier.fit(x_train, y_train)
+
+    prediction = classifier.predict(x_test)
+
+    end = time.time()
+
+    save_data[f"{classifier_condition}_n = {PCA_var[idx]}"] = (model_evaluation("RF", alpha[idx], x_test, y_test, prediction, classifier, end-start, n_classes))
+
+    save_data.to_csv("Random_Forest_Results.csv"
