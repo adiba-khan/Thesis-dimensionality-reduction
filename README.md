@@ -1,5 +1,6 @@
-Master's Thesis - degree project in health informatics, Stockholm University
-Managing highly dimensional EHR data to improve predictions of 30-day readmissions and mortality: investigating dimensionality reduction techniques for machine learning
+Master's Thesis - degree project in health informatics, Stockholm University and Karolinska Institutet
+
+Managing highly dimensional electronic health record data for machine learning models: improving predictions of 30-day hospital readmissions and mortality
 
 Files 1-3: data pre-processing
 
