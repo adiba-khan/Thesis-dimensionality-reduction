@@ -1,4 +1,4 @@
-Master's Thesis - degree project in health informatics, Stockholm University and Karolinska Institutet
+<b>Master's Thesis - degree project in health informatics, Stockholm University and Karolinska Institutet</b>
 
 Managing highly dimensional electronic health record data for machine learning models: improving predictions of 30-day hospital readmissions and mortality
 
