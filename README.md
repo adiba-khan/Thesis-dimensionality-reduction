@@ -2,6 +2,8 @@
 
 Managing highly dimensional electronic health record data for machine learning models: improving predictions of 30-day hospital readmissions and mortality
 
+Data source: <a href = "https://mimic.physionet.org/">MIMIC III</a>
+
 Files 0-2: data pre-processing
 
 File 3 random forest model with varying parameters of each dimensionality reduction technique
