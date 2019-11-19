@@ -2,12 +2,12 @@
 
 Managing highly dimensional electronic health record data for machine learning models: improving predictions of 30-day hospital readmissions and mortality
 
-Files 1-3: data pre-processing
+Files 0-2: data pre-processing
 
-Files 4, 5: random forest model with all dimensionality reduction implementations (ISOMAP has a much longer execution time, so it is separated out)
+File 3 random forest model with varying parameters of each dimensionality reduction technique
 
-Files 6: SVM model with each dimensionality reduction implementation
+File 4: SVM model with varying parameters of each dimensionality reduction technique
 
-Files 7: neural network model with each dimensionality reduction implementation
+File 5: neural network model (multi-layer perceptron) with varying parameters of each dimensionality reduction technique
 
-File 8: evaluation metrics
+File 6: evaluation metrics
