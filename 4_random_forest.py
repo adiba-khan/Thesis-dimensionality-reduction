@@ -9,6 +9,7 @@ from sklearn.linear_model import Lasso, LinearRegression
 from sklearn.feature_selection import SelectFromModel
 from sklearn.decomposition import PCA
 from sklearn.manifold import Isomap
+from sklearn.manifold import Isomap
 
 #  import libraries for classifier
 from sklearn import datasets, preprocessing
@@ -103,3 +104,33 @@ for idx in range(len(alpha)):
     save_data[f"{classifier_condition}_n = {PCA_var[idx]}"] = (model_evaluation("RF", alpha[idx], x_test, y_test, prediction, classifier, end-start, n_classes))
 
     save_data.to_csv("Random_Forest_Results.csv"
+
+                     
+#-------------------------------------------
+# RUN CLASSIFIER WITH ISOMAP IMPLEMENTATION
+#-------------------------------------------
+'''ISOMAP is so slow that the value of n_components is manually adjusted;
+the process in fact did not successfully run on the full dataset and various subsets of data
+were created to generate results demonstrating that ISOMAP is disadvanatageous'''
+                     
+classifier_condition = "Random Forest, ISOMAP"
+
+x_train, x_test, y_train, y_test = train_test_split(x, y, stratify=y, test_size = 0.20, random_state=5)
+
+start = time.time()
+
+embedding = Isomap(n_components=6)
+x_train = embedding.fit_transform(x_train)
+x_test = embedding.fit_transform(x_test)
+
+rfclassifier = RandomForestClassifier(n_estimators=500, random_state=5, criterion = 'gini')
+classifier = OneVsRestClassifier(rfclassifier, n_jobs=-1)
+classifier.fit(x_train, y_train)
+
+prediction = classifier.predict(x_test)
+
+end = time.time()
+
+save_data[f"{classifier_condition}_n = 6"] = (model_evaluation("RF", "6", x_test, y_test, prediction, classifier, end-start, n_classes))
+
+save_data.to_csv("Random_Forest_ISO_6.csv")
